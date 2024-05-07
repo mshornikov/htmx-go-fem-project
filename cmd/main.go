@@ -25,18 +25,19 @@ func newTemplate() *Templates {
 }
 
 var id = 0
+
 type Contact struct {
-	Name string
+	Name  string
 	Email string
-	Id int
+	Id    int
 }
 
 func newContact(name, email string) Contact {
 	id++
 	return Contact{
-		Name: name,
+		Name:  name,
 		Email: email,
-		Id: id,
+		Id:    id,
 	}
 }
 
@@ -105,7 +106,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
-	page := newPage() 
+	page := newPage()
 	e.Renderer = newTemplate()
 
 	e.Static("/images", "images")
@@ -113,7 +114,7 @@ func main() {
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(200, "index", page)
-	});
+	})
 
 	e.POST("/contacts", func(c echo.Context) error {
 		name := c.FormValue("name")
@@ -134,7 +135,7 @@ func main() {
 
 		c.Render(200, "form", newFormData())
 		return c.Render(200, "oob-contact", contact)
-	});
+	})
 
 	e.DELETE("/contacts/:id", func(c echo.Context) error {
 		time.Sleep(3 * time.Second)
